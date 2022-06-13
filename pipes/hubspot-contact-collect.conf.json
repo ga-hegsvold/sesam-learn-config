@@ -8,7 +8,7 @@
     "operation": "get",
     "payload_property": "results",
     "properties": {
-      "url": "contacts?properties=city,company,email,firstname,jobtitle,lastname,state,website,twitterhandle&associations=companies"
+      "url": "contacts?properties=city,company,email,firstname,jobtitle,lastname,state,website,twitterhandle,zip&associations=companies&limit=100"
     }
   },
   "namespaced_identifiers": false

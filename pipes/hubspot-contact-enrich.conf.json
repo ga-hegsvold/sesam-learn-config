@@ -1,0 +1,48 @@
+{
+  "_id": "hubspot-contact-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "hubspot-contact-collect"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["merge-union",
+          ["apply", "company-ni", "_S.associations.companies.results"]
+        ],
+        ["add", "zip-ni",
+          ["ni", "hubspot-contact-location", "_S.properties.zip"]
+        ],
+        ["add", "rdf:type", "hubspot:Contact"],
+        ["comment", "Derive HubSpot location entity from 'zip'"],
+        ["create-child",
+          ["apply", "create-location-entity", "_S.properties"]
+        ]
+      ],
+      "company-ni": [
+        ["add",
+          ["concat", "_S.type", "-ni"],
+          ["ni", "hubspot-company", "_S.id"]
+        ]
+      ],
+      "create-location-entity": [
+        ["add", "_id",
+          ["ni", "hubspot-contact-location", "_S.zip"]
+        ],
+        ["add", "hubspot-contact-location:city", "_S.city"],
+        ["add", "hubspot-contact-location:zip", "_S.zip"],
+        ["add", "rdf:type",
+          ["ni", "hubspot-contact-location", "zip"]
+        ]
+      ]
+    }
+  },
+  "add_namespaces": true,
+  "namespaces": {
+    "identity": "hubspot-contact",
+    "property": "hubspot-contact"
+  }
+}

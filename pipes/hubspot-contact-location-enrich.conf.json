@@ -1,0 +1,11 @@
+{
+  "_id": "hubspot-contact-location-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "hubspot-contact-enrich"
+  },
+  "transform": {
+    "type": "emit_children"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "_id": "global-person",
+  "type": "pipe",
+  "source": {
+    "type": "merge",
+    "datasets": ["hubspot-contact-enrich h-ce"],
+    "identity": "first",
+    "version": 2
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"]
+      ]
+    }
+  },
+  "metadata": {
+    "global": true
+  }
+}
