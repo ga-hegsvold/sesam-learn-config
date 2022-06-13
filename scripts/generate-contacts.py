@@ -15,8 +15,8 @@ with open("etternavn.txt", "r") as surname_file:
 with open("fornavn.txt", "r") as firstname_file:
     firstnames = firstname_file.readlines()
 
-with open("byer.txt", "r") as cities_file:
-    cities = cities_file.readlines()
+with open("postnummerregister-ansi.txt", "r", encoding="latin_1") as zip_file:
+    postnummer = zip_file.readlines()
 
 with open("fylker.txt", "r") as fylker_file:
     fylker = fylker_file.readlines()
@@ -57,7 +57,6 @@ def gen_data(argv):
 
         first_name = firstnames[random.randint(0, len(firstnames)-1)].strip()
         last_name = surnames[random.randint(0, len(surnames)-1)].strip()
-        city = cities[random.randint(0, len(cities)-1)].strip()
         region = fylker[random.randint(0, len(fylker)-1)].strip()
         website = "http://www.HubSpot.com"
         job_title = job_titles[random.randint(0, len(job_titles)-1)].strip()
@@ -65,12 +64,15 @@ def gen_data(argv):
         email = f"{first_name}.{last_name}@hubspot.com"
         company_name = "HubSpot"
         company_id = company_ids[random.randint(0, len(company_ids)-1)].strip()
+        zip_city = postnummer[random.randint(0, len(postnummer)-1)].split('\t')[0:2]
+        zip = zip_city[0]
+        city = zip_city[1]
 
-        contact = f"{first_name},{last_name},{city},{region},{website},{job_title},{twitter_user},{email},{company_name},{company_id}\n"
+        contact = f"{first_name},{last_name},{zip},{city},{region},{website},{job_title},{twitter_user},{email},{company_name},{company_id}\n"
         contacts.append(contact)
 
     # dump generated data to file
-    file_header = "First Name,Last Name,City,State/Region,Website URL,Job Title,Twitter Username,Email,Company Name,Company ID\n"
+    file_header = "First Name,Last Name,Postal Code,City,State/Region,Website URL,Job Title,Twitter Username,Email,Company Name,Company ID\n"
 
     print(f"Exporting {num_of_contacts} contacts to '{output_file}' ...")
     with open(output_file, 'w') as outfile:
