@@ -1,0 +1,33 @@
+{
+  "_id": "hubspot-company-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "hubspot-company-collect"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["merge-union",
+          ["apply", "contact-ni", "_S.associations.contacts.results"]
+        ],
+        ["add", "rdf:type",
+          ["ni", "hubspot:company"]
+        ]
+      ],
+      "contact-ni": [
+        ["add",
+          ["concat", "_S.type", "-ni"],
+          ["ni", "hubspot-contact", "_S.id"]
+        ]
+      ]
+    }
+  },
+  "add_namespaces": true,
+  "namespaces": {
+    "identity": "hubspot-company",
+    "property": "hubspot-company"
+  }
+}

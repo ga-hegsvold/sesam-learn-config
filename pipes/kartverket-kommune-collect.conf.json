@@ -1,0 +1,21 @@
+{
+  "_id": "kartverket-kommune-collect",
+  "type": "pipe",
+  "source": {
+    "type": "json",
+    "system": "kartverket",
+    "url": "kommuner"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["add", "_id",
+          ["string", "_S.kommunenummer"]
+        ]
+      ]
+    }
+  },
+  "namespaced_identifiers": false
+}

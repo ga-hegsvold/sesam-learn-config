@@ -1,0 +1,6 @@
+{
+  "_id": "bring",
+  "type": "system:url",
+  "url_pattern": "https://www.bring.no/%s",
+  "verify_ssl": true
+}

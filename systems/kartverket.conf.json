@@ -1,0 +1,6 @@
+{
+  "_id": "kartverket",
+  "type": "system:url",
+  "url_pattern": "https://ws.geonorge.no/kommuneinfo/v1/%s",
+  "verify_ssl": true
+}

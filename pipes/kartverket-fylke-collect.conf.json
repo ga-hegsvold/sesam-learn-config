@@ -1,0 +1,21 @@
+{
+  "_id": "kartverket-fylke-collect",
+  "type": "pipe",
+  "source": {
+    "type": "json",
+    "system": "kartverket",
+    "url": "fylker"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["add", "_id",
+          ["string", "_S.fylkesnummer"]
+        ]
+      ]
+    }
+  },
+  "namespaced_identifiers": false
+}

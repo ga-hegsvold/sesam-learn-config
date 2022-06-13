@@ -1,0 +1,31 @@
+{
+  "_id": "bring-postnummer-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "bring-postnummer-collect"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["make-ni", "bring-kommune", "kommunenummer"],
+        ["comment", "The two first digits of 'kommunenummer' is 'fylkesnummer'"],
+        ["add", "fylkesnummer-ni",
+          ["ni", "bring-fylke",
+            ["substring", 0, 2, "_S.kommunenummer"]
+          ]
+        ],
+        ["add", "rdf:type",
+          ["ni", "bring", "Postnummer"]
+        ]
+      ]
+    }
+  },
+  "add_namespaces": true,
+  "namespaces": {
+    "identity": "bring-postnummer",
+    "property": "bring-postnummer"
+  }
+}

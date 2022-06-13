@@ -1,0 +1,15 @@
+{
+  "_id": "hubspot-contact-collect",
+  "type": "pipe",
+  "source": {
+    "type": "rest",
+    "system": "hubspot",
+    "id_expression": "{{ id }}",
+    "operation": "get",
+    "payload_property": "results",
+    "properties": {
+      "url": "contacts?properties=city,company,email,firstname,jobtitle,lastname,state,website,twitterhandle&associations=companies"
+    }
+  },
+  "namespaced_identifiers": false
+}

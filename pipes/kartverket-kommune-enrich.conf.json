@@ -1,0 +1,30 @@
+{
+  "_id": "kartverket-kommune-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "kartverket-kommune-collect"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["comment", "The two first digits of 'kommunenummer' is 'fylkesnummer'"],
+        ["add", "fylkesnummer-ni",
+          ["ni", "kartverket-fylke",
+            ["substring", 0, 2, "_S.kommunenummer"]
+          ]
+        ],
+        ["add", "rdf:type",
+          ["ni", "kartverket", "Kommune"]
+        ]
+      ]
+    }
+  },
+  "add_namespaces": true,
+  "namespaces": {
+    "identity": "kartverket-kommune",
+    "property": "kartverket-kommune"
+  }
+}

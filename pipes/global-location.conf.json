@@ -1,0 +1,43 @@
+{
+  "_id": "global-location",
+  "type": "pipe",
+  "source": {
+    "type": "merge",
+    "datasets": ["bring-postnummer-enrich b-p", "kartverket-fylke-enrich gn-f", "kartverket-kommune-enrich gn-k"],
+    "identity": "first",
+    "version": 2
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["add", "zipcode", "_S.bring-postnummer:postnummer"],
+        ["add", "municipality-number",
+          ["coalesce",
+            ["list", "_S.kartverket-kommune:kommunenummer", "_S.bring-postnummer:kommunenummer"]
+          ]
+        ],
+        ["add", "municipality-name",
+          ["coalesce",
+            ["list", "_S.kartverket-kommune:kommunenavn", "_S.bring-postnummer:kommunenavn"]
+          ]
+        ],
+        ["add", "county-number",
+          ["coalesce",
+            ["list", "_S.kartverket-fylke:fylkesnummer", "_S.kartverket-kommune:fylkesnummer"]
+          ]
+        ],
+        ["add", "county-name",
+          ["coalesce",
+            ["list", "_S.kartverket-fylke:fylkesnavn", "_S.kartverket-kommune:fylkesnavn"]
+          ]
+        ]
+      ]
+    }
+  },
+  "metadata": {
+    "global": true
+  },
+  "namespaced_identifiers": true
+}

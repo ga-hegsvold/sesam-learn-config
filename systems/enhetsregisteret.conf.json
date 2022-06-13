@@ -1,0 +1,8 @@
+{
+  "_id": "enhetsregisteret",
+  "type": "system:microservice",
+  "docker": {
+    "image": "sesamcommunity/learn-sesam-crm:v1.1.2",
+    "port": 5000
+  }
+}

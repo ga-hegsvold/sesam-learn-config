@@ -1,0 +1,24 @@
+{
+  "_id": "enhetsregisteret-company-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "enhetsregisteret-company-collect"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["add", "rdf:type",
+          ["ni", "enhetsregisteret:company"]
+        ]
+      ]
+    }
+  },
+  "add_namespaces": true,
+  "namespaces": {
+    "identity": "enhetsregisteret-company",
+    "property": "enhetsregisteret-company"
+  }
+}

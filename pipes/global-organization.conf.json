@@ -1,0 +1,49 @@
+{
+  "_id": "global-organization",
+  "type": "pipe",
+  "source": {
+    "type": "merge",
+    "datasets": ["hubspot-company-enrich hc", "enhetsregisteret-company-enrich ec"],
+    "equality_sets": [
+      ["hc.properties.about_us", "ec.orgnr"]
+    ],
+    "identity": "first",
+    "version": 2
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["add", "organization-number",
+          ["coalesce",
+            ["list", "_S.enhetsregisteret-company:orgnr", "_S.hubspot-company:properties.hubspot-company:about_us"]
+          ]
+        ],
+        ["add", "name",
+          ["coalesce",
+            ["list", "_S.enhetsregisteret-company:navn", "_S.hubspot-company:properties.hubspot-company:name"]
+          ]
+        ],
+        ["add", "address",
+          ["coalesce",
+            ["list", "_S.enhetsregisteret-company:forretningsadr", "_S.hubspot-company:properties.hubspot-company:address"]
+          ]
+        ],
+        ["add", "zipcode",
+          ["coalesce",
+            ["list", "_S.enhetsregisteret-company:forradrpostnr", "_S.hubspot-company:properties.hubspot-company:zip"]
+          ]
+        ],
+        ["add", "city",
+          ["coalesce",
+            ["list", "_S.enhetsregisteret-company:forradrpoststed", "_S.hubspot-company:properties.hubspot-company:city"]
+          ]
+        ]
+      ]
+    }
+  },
+  "metadata": {
+    "global": true
+  }
+}

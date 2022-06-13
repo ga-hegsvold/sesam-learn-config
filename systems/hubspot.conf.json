@@ -1,0 +1,26 @@
+{
+  "_id": "hubspot",
+  "type": "system:rest",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "operations": {
+    "get": {
+      "method": "GET",
+      "url": "{{ properties.url }}&"
+    },
+    "get_company": {
+      "method": "GET",
+      "url": "companies/{{ id }}?properties=about_us,address,city,country,description,domain,founded_year,is_public,linkedin_company_page,name,numberofemployees,state,timezone,website,zip&associations=contacts,companies,deals,tickets,products,quotes&"
+    },
+    "update": {
+      "method": "PATCH",
+      "payload-type": "json",
+      "url": "{{ properties.url }}/{{ properties.id }}?"
+    }
+  },
+  "rate_limiting_delay": 60,
+  "rate_limiting_retries": 3,
+  "url_pattern": "https://api.hubapi.com/crm/v3/objects/%shapikey=$SECRET(hubspot-api-key)",
+  "verify_ssl": true
+}

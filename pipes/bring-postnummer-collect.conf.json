@@ -1,0 +1,26 @@
+{
+  "_id": "bring-postnummer-collect",
+  "type": "pipe",
+  "source": {
+    "type": "csv",
+    "system": "bring",
+    "delimiter": "\t",
+    "encoding": "latin_1",
+    "field_names": ["postnummer", "poststed", "kommunenummer", "kommunenavn", "kategori"],
+    "has_header": false,
+    "primary_key": "postnummer",
+    "url": "postnummerregister-ansi.txt"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["add", "_id",
+          ["string", "_S.postnummer"]
+        ]
+      ]
+    }
+  },
+  "namespaced_identifiers": false
+}

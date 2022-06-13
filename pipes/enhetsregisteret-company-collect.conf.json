@@ -1,0 +1,19 @@
+{
+  "_id": "enhetsregisteret-company-collect",
+  "type": "pipe",
+  "source": {
+    "type": "json",
+    "system": "enhetsregisteret",
+    "url": "/enhetsregisteret"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["add", "_id", "_S.orgnr"]
+      ]
+    }
+  },
+  "namespaced_identifiers": false
+}

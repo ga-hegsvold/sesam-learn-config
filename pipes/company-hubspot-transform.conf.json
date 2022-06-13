@@ -1,0 +1,28 @@
+{
+  "_id": "company-hubspot-transform",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "global-organization"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["add", "id", "_S.hubspot-company:id"],
+        ["add", "payload",
+          ["dict", "properties",
+            ["apply", "create-properties", "_S."]
+          ]
+        ]
+      ],
+      "create-properties": [
+        ["add", "address", "_S.global-organization:address"],
+        ["add", "city", "_S.global-organization:city"],
+        ["add", "name", "_S.global-organization:name"],
+        ["add", "about_us", "_S.global-organization:organization-number"],
+        ["add", "zip", "_S.global-organization:zipcode"]
+      ]
+    }
+  }
+}

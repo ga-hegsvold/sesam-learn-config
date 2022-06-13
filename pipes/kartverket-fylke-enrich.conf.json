@@ -1,0 +1,24 @@
+{
+  "_id": "kartverket-fylke-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "kartverket-fylke-collect"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["copy", "*"],
+        ["add", "rdf:type",
+          ["ni", "kartverket", "Fylke"]
+        ]
+      ]
+    }
+  },
+  "add_namespaces": true,
+  "namespaces": {
+    "identity": "kartverket-fylke",
+    "property": "kartverket-fylke"
+  }
+}
