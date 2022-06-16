@@ -11,7 +11,7 @@
       "default": [
         ["copy", "*"],
         ["add", "rdf:type",
-          ["ni", "kartverket", "Fylke"]
+          ["ni", "kartverket", "fylke"]
         ]
       ]
     }

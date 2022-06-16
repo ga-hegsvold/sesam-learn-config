@@ -1,9 +1,9 @@
 {
-  "_id": "hubspot-contact-location-enrich",
+  "_id": "bring-postnummer-location-enrich",
   "type": "pipe",
   "source": {
     "type": "dataset",
-    "dataset": "hubspot-contact-enrich"
+    "dataset": "bring-postnummer-enrich"
   },
   "transform": {
     "type": "dtl",
@@ -17,9 +17,6 @@
               ["if",
                 ["and",
                   ["is-ni", "_.value"],
-                  ["matches", "*global-location*",
-                    ["ni-ns", "_.value"]
-                  ],
                   ["eq", "ni",
                     ["last",
                       ["split", "-", "_.key"]
@@ -32,7 +29,7 @@
                     ["ni-id", "_.value"]
                   ], "rdf:type",
                   ["ni",
-                    ["replace", "hubspot-", "hubspot:",
+                    ["replace", "bring-", "bring:",
                       ["ni-ns", "_.value"]
                     ]
                   ],

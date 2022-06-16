@@ -1,5 +1,5 @@
 {
-  "_id": "hubspot-contact-location-enrich",
+  "_id": "hubspot-contact-organization-enrich",
   "type": "pipe",
   "source": {
     "type": "dataset",
@@ -17,7 +17,7 @@
               ["if",
                 ["and",
                   ["is-ni", "_.value"],
-                  ["matches", "*global-location*",
+                  ["matches", "*global-organization*",
                     ["ni-ns", "_.value"]
                   ],
                   ["eq", "ni",

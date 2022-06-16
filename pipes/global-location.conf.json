@@ -3,12 +3,16 @@
   "type": "pipe",
   "source": {
     "type": "merge",
-    "datasets": ["bring-postnummer-enrich b-p", "kartverket-fylke-enrich gn-f", "kartverket-kommune-enrich gn-k", "hubspot-contact-location-enrich h-cle"],
+    "datasets": ["bring-postnummer-enrich b-p", "bring-postnummer-location-enrich b-pl", "kartverket-fylke-enrich k-f", "kartverket-kommune-enrich k-k", "hubspot-contact-location-enrich h-cl"],
     "equality_sets": [
-      ["b-p.postnummer", "h-cle.zip"]
+      ["b-p.postnummer", "h-cl.value"],
+      ["b-pl.value", "k-f.fylkesnummer", "k-k.kommunenummer"]
     ],
     "identity": "first",
     "version": 2
+  },
+  "sink": {
+    "indexes": "$ids"
   },
   "transform": {
     "type": "dtl",

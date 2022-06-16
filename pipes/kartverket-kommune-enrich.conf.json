@@ -17,7 +17,7 @@
           ]
         ],
         ["add", "rdf:type",
-          ["ni", "kartverket", "Kommune"]
+          ["ni", "kartverket", "kommune"]
         ]
       ]
     }

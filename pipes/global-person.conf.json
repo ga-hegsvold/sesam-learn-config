@@ -7,11 +7,19 @@
     "identity": "first",
     "version": 2
   },
+  "sink": {
+    "indexes": "$ids"
+  },
   "transform": {
     "type": "dtl",
     "rules": {
       "default": [
-        ["copy", "*"]
+        ["copy", "*"],
+        ["add", "first-name", "_S.hubspot-contact:properties.hubspot-contact:firstname"],
+        ["add", "surname", "_S.hubspot-contact:properties.hubspot-contact:lastname"],
+        ["add", "job-title", "_S.hubspot-contact:properties.hubspot-contact:jobtitle"],
+        ["add", "email", "_S.hubspot-contact:properties.hubspot-contact:email"],
+        ["add", "zip-code", "_S.hubspot-contact:properties.hubspot-contact:zip"]
       ]
     }
   },

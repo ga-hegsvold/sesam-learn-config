@@ -10,15 +10,15 @@
     "rules": {
       "default": [
         ["copy", "*"],
-        ["make-ni", "bring-kommune", "kommunenummer"],
-        ["comment", "The two first digits of 'kommunenummer' is 'fylkesnummer'"],
+        ["make-ni", "bring-postnummer-kommune", "kommunenummer"],
+        ["comment", "'fylkesnummer' is the two first digits of 'kommunenummer'"],
         ["add", "fylkesnummer-ni",
-          ["ni", "bring-fylke",
+          ["ni", "bring-postnummer-fylke",
             ["substring", 0, 2, "_S.kommunenummer"]
           ]
         ],
         ["add", "rdf:type",
-          ["ni", "bring", "Postnummer"]
+          ["ni", "bring", "postnummer"]
         ]
       ]
     }

@@ -1,15 +1,16 @@
 {
-  "_id": "hubspot-contact-location-enrich",
+  "_id": "hubspot-company-person-enrich",
   "type": "pipe",
   "source": {
     "type": "dataset",
-    "dataset": "hubspot-contact-enrich"
+    "dataset": "hubspot-company-enrich"
   },
   "transform": {
     "type": "dtl",
     "rules": {
       "default": [
         ["comment", "Create a new entity for each NI."],
+        ["comment", "TODO: Handle lists of NIs."],
         ["create",
           ["filter",
             ["is-not-null", "_."],
@@ -17,7 +18,7 @@
               ["if",
                 ["and",
                   ["is-ni", "_.value"],
-                  ["matches", "*global-location*",
+                  ["matches", "*global-person*",
                     ["ni-ns", "_.value"]
                   ],
                   ["eq", "ni",

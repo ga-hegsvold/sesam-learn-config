@@ -1,0 +1,42 @@
+{
+  "_id": "hubspot-contact-transform",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "global-person"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["filter",
+          ["in",
+            ["ni", "hubspot", "contact"], "_S.rdf:type"]
+        ],
+        ["add", "sesam-id", "_S._id"],
+        ["add", "hs_object_id",
+          ["ni-id",
+            ["ni", "_S._id"]
+          ]
+        ],
+        ["add", "firstname", "_S.global-person:first-name"],
+        ["add", "lastname", "_S.global-person:surname"],
+        ["add", "email", "_S.global-person:email"],
+        ["add", "zip", "_S.global-person:zip-code"],
+        ["merge",
+          ["apply-hops", "get-locaton", {
+            "datasets": ["global-location postnr", "global-location fylke"],
+            "where": [
+              ["eq", "_S.hubspot-contact:zip-ni", "postnr.$ids"],
+              ["eq", "postnr.bring-postnummer:fylkesnummer-ni", "fylke.$ids"]
+            ]
+          }]
+        ]
+      ],
+      "get-locaton": [
+        ["add", "state", "_S.global-location:county-name"]
+      ]
+    }
+  },
+  "remove_namespaces": true
+}

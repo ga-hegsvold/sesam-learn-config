@@ -3,12 +3,16 @@
   "type": "pipe",
   "source": {
     "type": "merge",
-    "datasets": ["hubspot-company-enrich hc", "enhetsregisteret-company-enrich ec"],
+    "datasets": ["hubspot-company-enrich h-c", "enhetsregisteret-company-enrich e-c", "hubspot-contact-organization-enrich h-co"],
     "equality_sets": [
-      ["hc.properties.about_us", "ec.orgnr"]
+      ["h-c.properties.about_us", "e-c.orgnr"],
+      ["h-c.id", "h-co.value"]
     ],
     "identity": "first",
     "version": 2
+  },
+  "sink": {
+    "indexes": "$ids"
   },
   "transform": {
     "type": "dtl",
