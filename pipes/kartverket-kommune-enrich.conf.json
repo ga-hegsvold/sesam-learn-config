@@ -10,7 +10,7 @@
     "rules": {
       "default": [
         ["copy", "*"],
-        ["comment", "The two first digits of 'kommunenummer' is 'fylkesnummer'"],
+        ["comment", "'fylkesnummer' is the two first digits of 'kommunenummer'"],
         ["add", "fylkesnummer-ni",
           ["ni", "kartverket-fylke",
             ["substring", 0, 2, "_S.kommunenummer"]
