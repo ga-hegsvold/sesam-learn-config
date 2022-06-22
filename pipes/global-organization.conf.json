@@ -3,10 +3,10 @@
   "type": "pipe",
   "source": {
     "type": "merge",
-    "datasets": ["hubspot-company-enrich h-c", "enhetsregisteret-company-enrich e-c", "hubspot-contact-organization-enrich h-co"],
+    "datasets": ["hubspot-company-enrich h-c", "enhetsregisteret-company-enrich e-c", "hubspot-contact-company-enrich h-cc"],
     "equality_sets": [
       ["h-c.properties.about_us", "e-c.orgnr"],
-      ["h-c.id", "h-co.value"]
+      ["h-c.id", "h-cc.value"]
     ],
     "identity": "first",
     "version": 2

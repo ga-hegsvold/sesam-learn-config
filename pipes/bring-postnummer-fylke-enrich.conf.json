@@ -1,0 +1,52 @@
+{
+  "_id": "bring-postnummer-fylke-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "bring-postnummer-enrich"
+  },
+  "transform": {
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["comment", "Create a new entity for each NI."],
+        ["create",
+          ["filter",
+            ["is-not-null", "_."],
+            ["map",
+              ["if",
+                ["and",
+                  ["is-ni", "_.value"],
+                  ["matches", "*bring-postnummer-fylke*",
+                    ["ni-ns", "_.value"]
+                  ],
+                  ["eq", "ni",
+                    ["last",
+                      ["split", "-", "_.key"]
+                    ]
+                  ]
+                ],
+                ["dict", "_id",
+                  ["concat",
+                    ["ni-ns", "_.value"], ":",
+                    ["ni-id", "_.value"]
+                  ], "rdf:type",
+                  ["ni",
+                    ["replace", "bring-", "bring:",
+                      ["ni-ns", "_.value"]
+                    ]
+                  ],
+                  ["concat",
+                    ["ni-ns", "_.value"], ":value"],
+                  ["ni-id", "_.value"]
+                ]
+              ],
+              ["key-values", "_S."]
+            ]
+          ]
+        ],
+        ["discard"]
+      ]
+    }
+  }
+}

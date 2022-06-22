@@ -13,7 +13,7 @@
           ["apply", "company-ni", "_S.associations.companies.results"]
         ],
         ["add", "zip-ni",
-          ["ni", "hubspot-contact-zip-global-location", "_S.properties.zip"]
+          ["ni", "hubspot-contact-zip", "_S.properties.zip"]
         ],
         ["add", "rdf:type",
           ["ni", "hubspot", "contact"]
@@ -26,7 +26,7 @@
       "company-ni": [
         ["add",
           ["concat", "_S.type", "-ni"],
-          ["ni", "hubspot-contact-company-global-organization", "_S.id"]
+          ["ni", "hubspot-contact-company", "_S.id"]
         ]
       ]
     }

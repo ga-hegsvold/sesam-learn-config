@@ -1,5 +1,5 @@
 {
-  "_id": "hubspot-contact-organization-enrich",
+  "_id": "hubspot-contact-zip-enrich",
   "type": "pipe",
   "source": {
     "type": "dataset",
@@ -12,12 +12,14 @@
         ["comment", "Create a new entity for each NI."],
         ["create",
           ["filter",
-            ["is-not-null", "_."],
+            ["and",
+              ["is-not-null", "_."]
+            ],
             ["map",
               ["if",
                 ["and",
                   ["is-ni", "_.value"],
-                  ["matches", "*global-organization*",
+                  ["matches", "*hubspot-contact-zip*",
                     ["ni-ns", "_.value"]
                   ],
                   ["eq", "ni",
