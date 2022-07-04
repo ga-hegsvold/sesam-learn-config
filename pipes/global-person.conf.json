@@ -3,7 +3,10 @@
   "type": "pipe",
   "source": {
     "type": "merge",
-    "datasets": ["hubspot-contact-enrich h-ce"],
+    "datasets": ["hubspot-contact-enrich h-c", "hubspot-company-contact-enrich h-cc"],
+    "equality_sets": [
+      ["h-c.id", "h-cc.value"]
+    ],
     "identity": "first",
     "version": 2
   },

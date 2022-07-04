@@ -1,0 +1,78 @@
+{
+  "_id": "hubspot-company-contact-enrich",
+  "type": "pipe",
+  "source": {
+    "type": "dataset",
+    "dataset": "hubspot-company-enrich"
+  },
+  "transform": [{
+    "type": "dtl",
+    "rules": {
+      "default": [
+        ["comment", "Create a new entity for each NI."],
+        ["create",
+          ["filter",
+            ["is-not-null", "_."],
+            ["map",
+              ["if",
+                ["and",
+                  ["is-ni", "_.value"],
+                  ["matches", "*hubspot-company-contact*",
+                    ["ni-ns", "_.value"]
+                  ],
+                  ["eq", "ni",
+                    ["last",
+                      ["split", "-", "_.key"]
+                    ]
+                  ]
+                ],
+                ["if",
+                  ["is-list", "_.value"],
+                  ["apply", "create-ni-from-list", "_."],
+                  ["dict", "_id", "foo", "$children",
+                    ["list",
+                      ["apply", "create-ni", "_.value"]
+                    ]
+                  ]
+                ]
+              ],
+              ["key-values", "_S."]
+            ]
+          ]
+        ]
+      ],
+      "create-ni": [
+        ["add", "_id",
+          ["concat",
+            ["ni-ns",
+              ["first", "_S."]
+            ], ":",
+            ["ni-id", "_S."]
+          ]
+        ],
+        ["add", "rdf:type",
+          ["ni",
+            ["distinct",
+              ["replace", "hubspot-", "hubspot:",
+                ["ni-ns", "_S."]
+              ]
+            ]
+          ]
+        ],
+        ["add",
+          ["concat",
+            ["ni-ns", "_S."], ":value"],
+          ["ni-id", "_S."]
+        ]
+      ],
+      "create-ni-from-list": [
+        ["add", "_id", "foo"],
+        ["create-child",
+          ["apply", "create-ni", "_S.value"]
+        ]
+      ]
+    }
+  }, {
+    "type": "emit_children"
+  }]
+}

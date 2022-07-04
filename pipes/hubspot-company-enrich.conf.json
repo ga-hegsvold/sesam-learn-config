@@ -20,7 +20,7 @@
       "contact-ni": [
         ["add",
           ["concat", "_S.type", "-ni"],
-          ["ni", "hubspot-company-contact-global-person", "_S.id"]
+          ["ni", "hubspot-company-contact", "_S.id"]
         ]
       ]
     }
