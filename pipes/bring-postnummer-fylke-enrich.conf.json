@@ -5,7 +5,7 @@
     "type": "dataset",
     "dataset": "bring-postnummer-enrich"
   },
-  "transform": {
+  "transform": [{
     "type": "dtl",
     "rules": {
       "default": [
@@ -16,7 +16,9 @@
             ["map",
               ["if",
                 ["and",
-                  ["is-ni", "_.value"],
+                  ["is-ni",
+                    ["sorted-descending", "_.value"]
+                  ],
                   ["matches", "*bring-postnummer-fylke*",
                     ["ni-ns", "_.value"]
                   ],
@@ -26,19 +28,14 @@
                     ]
                   ]
                 ],
-                ["dict", "_id",
-                  ["concat",
-                    ["ni-ns", "_.value"], ":",
-                    ["ni-id", "_.value"]
-                  ], "rdf:type",
-                  ["ni",
-                    ["replace", "bring-", "bring:",
-                      ["ni-ns", "_.value"]
+                ["if",
+                  ["is-list", "_.value"],
+                  ["apply", "create-ni-from-list", "_."],
+                  ["dict", "_id", "foo", "$children",
+                    ["list",
+                      ["apply", "create-ni", "_.value"]
                     ]
-                  ],
-                  ["concat",
-                    ["ni-ns", "_.value"], ":value"],
-                  ["ni-id", "_.value"]
+                  ]
                 ]
               ],
               ["key-values", "_S."]
@@ -46,7 +43,37 @@
           ]
         ],
         ["discard"]
+      ],
+      "create-ni": [
+        ["add", "_id",
+          ["concat",
+            ["ni-ns",
+              ["first", "_S."]
+            ], ":",
+            ["ni-id", "_S."]
+          ]
+        ],
+        ["add", "rdf:type",
+          ["ni",
+            ["replace", "bring-", "bring:",
+              ["ni-ns", "_S."]
+            ]
+          ]
+        ],
+        ["add",
+          ["concat",
+            ["ni-ns", "_S."], ":value"],
+          ["ni-id", "_S."]
+        ]
+      ],
+      "create-ni-from-list": [
+        ["add", "_id", "foo"],
+        ["create-child",
+          ["apply", "create-ni", "_S.value"]
+        ]
       ]
     }
-  }
+  }, {
+    "type": "emit_children"
+  }]
 }

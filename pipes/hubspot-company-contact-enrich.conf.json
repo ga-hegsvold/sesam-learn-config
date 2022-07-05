@@ -16,7 +16,9 @@
             ["map",
               ["if",
                 ["and",
-                  ["is-ni", "_.value"],
+                  ["is-ni",
+                    ["sorted-descending", "_.value"]
+                  ],
                   ["matches", "*hubspot-company-contact*",
                     ["ni-ns", "_.value"]
                   ],
@@ -39,7 +41,8 @@
               ["key-values", "_S."]
             ]
           ]
-        ]
+        ],
+        ["discard"]
       ],
       "create-ni": [
         ["add", "_id",
@@ -52,10 +55,8 @@
         ],
         ["add", "rdf:type",
           ["ni",
-            ["distinct",
-              ["replace", "hubspot-", "hubspot:",
-                ["ni-ns", "_S."]
-              ]
+            ["replace", "hubspot-", "hubspot:",
+              ["ni-ns", "_S."]
             ]
           ]
         ],
