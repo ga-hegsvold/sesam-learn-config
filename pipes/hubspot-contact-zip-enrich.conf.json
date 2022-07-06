@@ -55,8 +55,28 @@
         ],
         ["add", "rdf:type",
           ["ni",
-            ["replace", "hubspot-", "hubspot:",
-              ["ni-ns", "_S."]
+            ["concat",
+              ["replace", "-", ":",
+                ["concat",
+                  ["first",
+                    ["split", "-",
+                      ["ni-ns", "_S."]
+                    ]
+                  ], "-"]
+              ],
+              ["substring",
+                ["length",
+                  ["replace", "-", ":",
+                    ["concat",
+                      ["first",
+                        ["split", "-",
+                          ["ni-ns", "_S."]
+                        ]
+                      ], "-"]
+                  ]
+                ],
+                ["ni-ns", "_S."]
+              ]
             ]
           ]
         ],
